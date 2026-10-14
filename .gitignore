@@ -1,0 +1,12 @@
+# generated data, secrets and downloaded binaries never go in git
+data/
+.env
+tools/mailpit/bin/
+__pycache__/
+*.pyc
+.pytest_cache/
+node_modules/
+frontend/dist/
+*.db
+*.db-wal
+*.db-shm

@@ -1,0 +1,18 @@
+# Ordinary activity that must NOT produce an incident (false-positive check), including a promo and a typo.
+id: benign_day
+category: benign
+seed: 5
+actors:
+  - {at: 0,   type: email, name: announce, from: "HR <hr@company.lab>", to: carol@company.lab,
+     subject: Holiday schedule, link_path: /holidays, link_host: portal.company.lab, body: "Next year's holiday schedule is posted: {link}"}
+  - {at: 15,  type: email, name: promo, from: "Deals <offers@shopmail.lab>", to: dave@company.lab,
+     subject: "20% off this week", body: "Our weekly newsletter. Unsubscribe any time."}
+  - {at: 30,  type: email, name: personal, from: "Alice <alice@company.lab>", to: bob@company.lab,
+     subject: "Lunch?", body: "Want to grab lunch at noon?"}
+  - {at: 45,  type: browse, client_ip: 127.0.0.40, user: carol, paths: [/holidays, /announcements, /docs]}
+  - {at: 60,  type: login, name: alice_ok,  username: alice, client_ip: 127.0.0.40, count: 1, password: correct}
+  - {at: 70,  type: login, name: bob_typo,  username: bob,   client_ip: 127.0.0.40, count: 2, interval: 6, password: wrong_then_correct}
+  - {at: 90,  type: login, name: carol_ok,  username: carol, client_ip: 127.0.0.40, count: 1, password: correct}
+ground_truth:
+  expect_incidents: 0
+  note: "shared office IP, one typo then success, a promotional email: none of these is an attack"

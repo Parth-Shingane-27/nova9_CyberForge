@@ -1,0 +1,17 @@
+# Looks similar to the attack chain but the events belong to DIFFERENT users. Correct behaviour: do not link.
+id: hard_negative_unrelated
+category: hard_negative
+seed: 23
+actors:
+  - {at: 0,   type: email, name: phish, from: "IT Support <it-support@c0mpany-portal.lab>", to: alice@company.lab,
+     subject: Password reset required, link_host: c0mpany-portal.lab, link_path: /reset,
+     body: "Your password expires today. Verify your account now: {link}"}
+  - {at: 90,  type: browse, client_ip: 127.0.0.10, user: alice, paths: [/news]}
+  - {at: 626, type: login, name: bob_burst, username: bob, client_ip: 127.0.0.22, count: 3, interval: 14, password: wrong}
+ground_truth:
+  not_linked:
+    - {a: "email:phish", b: "auth:bob_burst", why: "bob is not a recipient and shares no token, account or source with the email"}
+  findings:
+    - {detector: E2, target: "email:phish", severity: medium}
+  expect_incidents: 0
+  note: "3 failures is below the A1 demo threshold (5), so no authentication finding is expected"

@@ -1,0 +1,9 @@
+{
+  "_note": "SYNTHETIC LAB USERS. Fake identities and harmless test passwords for the local lab only. Not real accounts.",
+  "users": {
+    "alice": {"email": "alice@company.lab", "password": "lab-pass-alice-1"},
+    "bob":   {"email": "bob@company.lab",   "password": "lab-pass-bob-2"},
+    "carol": {"email": "carol@company.lab", "password": "lab-pass-carol-3"},
+    "dave":  {"email": "dave@company.lab",  "password": "lab-pass-dave-4"}
+  }
+}

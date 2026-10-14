@@ -1,0 +1,25 @@
+# Phish -> tokenised visit -> login burst -> success, plus ordinary background.
+# Times are scenario-seconds; the runner multiplies them by --time-scale.
+id: phish_then_takeover
+category: attack_chain
+seed: 11
+actors:
+  - {at: 0,   type: email, name: phish, from: "IT Support <it-support@c0mpany-portal.lab>", to: alice@company.lab,
+     reply_to: helpdesk@elsewhere.lab, subject: Password reset required, link_host: c0mpany-portal.lab, link_path: /reset,
+     body: "Your password expires today. Verify your account now: {link}"}
+  - {at: 20,  type: email, name: announce, from: "Facilities <facilities@company.lab>", to: carol@company.lab,
+     subject: Parking lot closed Friday, body: "The north lot is closed on Friday for resurfacing."}
+  - {at: 40,  type: browse, client_ip: 127.0.0.40, user: carol, paths: [/announcements, /calendar]}
+  - {at: 387, type: click, name: click1, from_email: phish, client_ip: 127.0.0.10, user: alice}
+  - {at: 541, type: login, name: takeover, username: alice, client_ip: 127.0.0.21, count: 6, interval: 14, password: wrong_then_correct}
+  - {at: 560, type: login, name: dave_ok, username: dave, client_ip: 127.0.0.40, count: 1, password: correct}
+ground_truth:
+  links:
+    - {from: "email:phish", to: "web:click1", tier: observed}
+    - {from: "web:click1", to: "auth:takeover", tier: inferred-weak}
+  findings:
+    - {detector: E2, target: "email:phish", severity: medium}
+    - {detector: A1, target: "auth:takeover", severity: medium}
+    - {detector: A4, target: "auth:takeover", severity: high}
+  expect_incidents: 1
+  limitations: ["no session links the visit to the login source", "SPF/DKIM/DMARC unobservable in the lab"]

@@ -1,0 +1,68 @@
+@import "tailwindcss";
+
+/* Obsidian Signal — evidence-first cyber intelligence */
+@theme {
+  --color-obsidian: #080B12;
+  --color-surface: #101725;
+  --color-surface2: #151F30;
+  --color-panel: #1A2638;
+  --color-cyan: #53D8E8;
+  --color-ice: #91EAF2;
+  --color-violet: #9585F7;
+  --color-ink: #F3F6FB;
+  --color-muted: #A4B0C2;
+  --color-line: #263247;
+  --color-ok: #43D6A2;
+  --color-warn: #F4BD70;
+  --color-crit: #FF7185;
+  --font-sans: "Inter Variable", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono: ui-monospace, "Cascadia Mono", "SF Mono", Consolas, "Liberation Mono", monospace;
+}
+
+html { scroll-behavior: smooth; scroll-padding-top: 84px; background: var(--color-obsidian); }
+body {
+  margin: 0; color: var(--color-ink); background: var(--color-obsidian);
+  font-family: var(--font-sans); -webkit-font-smoothing: antialiased; overflow-x: hidden;
+}
+::selection { background: rgba(83, 216, 232, .28); }
+
+:focus-visible { outline: 2px solid var(--color-cyan); outline-offset: 3px; border-radius: 6px; }
+svg :focus-visible { outline: none; }
+.svg-focus:focus-visible > .focus-ring { stroke: var(--color-ice); stroke-width: 2.5; opacity: 1; }
+
+.skip-link { position: absolute; left: -999px; top: 8px; z-index: 100; background: var(--color-ink); color: var(--color-obsidian); padding: 8px 14px; border-radius: 8px; font-weight: 600; }
+.skip-link:focus { left: 12px; }
+
+/* Layered backgrounds */
+.bg-grid {
+  background-image:
+    linear-gradient(to right, rgba(145, 234, 242, .045) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(145, 234, 242, .045) 1px, transparent 1px);
+  background-size: 56px 56px;
+  mask-image: radial-gradient(ellipse 70% 60% at 50% 30%, #000 30%, transparent 78%);
+  -webkit-mask-image: radial-gradient(ellipse 70% 60% at 50% 30%, #000 30%, transparent 78%);
+}
+.bg-aurora {
+  background:
+    radial-gradient(60% 50% at 78% 8%, rgba(83, 216, 232, .13), transparent 70%),
+    radial-gradient(50% 45% at 12% 18%, rgba(149, 133, 247, .12), transparent 70%);
+}
+.glass {
+  background: linear-gradient(180deg, rgba(26, 38, 56, .72), rgba(16, 23, 37, .72));
+  border: 1px solid var(--color-line);
+  backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+}
+.hairline-top { box-shadow: inset 0 1px 0 rgba(255, 255, 255, .045); }
+.text-balance { text-wrap: balance; }
+
+/* Signal flow on evidence paths */
+@keyframes signal { to { stroke-dashoffset: -32; } }
+.signal-flow { animation: signal 1.6s linear infinite; }
+@keyframes rise { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+.rise { animation: rise .5s ease both; }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .signal-flow, .rise { animation: none !important; }
+  * { transition-duration: .001ms !important; }
+}

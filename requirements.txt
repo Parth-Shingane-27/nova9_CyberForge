@@ -1,0 +1,10 @@
+# Pinned to the versions this project was developed and tested against (Python 3.12).
+fastapi==0.143.0
+starlette==1.8.0
+uvicorn==0.54.0
+httpx==0.28.1
+requests==2.34.2
+google-auth==2.62.0
+pydantic==2.14.1
+python-dotenv==1.2.3
+pytest==9.1.1
